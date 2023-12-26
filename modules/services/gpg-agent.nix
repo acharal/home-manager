@@ -48,10 +48,6 @@ let
       export SSH_AUTH_SOCK="${sockPathCmd}"
     '';
 
-  gpgFishInitStr = ''
-    set -gx GPG_TTY (tty)
-  '' + optionalString cfg.enableSshSupport gpgSshSupportStr;
-
   # mimic `gpgconf` output for use in `systemd` unit definitions.
   # we cannot use `gpgconf` directly because it heavily depends on system
   # state, but we need the values at build time. original:
