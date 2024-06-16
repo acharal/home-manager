@@ -66,9 +66,8 @@ let
   hexStringToBase32 = let
     mod = a: b: a - a / b * b;
     pow2 = elemAt [ 1 2 4 8 16 32 64 128 256 ];
-    splitChars = s: init (tail (splitString "" s));
 
-    base32Alphabet = splitChars "ybndrfg8ejkmcpqxot1uwisza345h769";
+    base32Alphabet = stringToCharacters "ybndrfg8ejkmcpqxot1uwisza345h769";
     hexToIntTable = listToAttrs (genList (x: {
       name = toLower (toHexString x);
       value = x;
@@ -94,10 +93,15 @@ let
         buf = buf';
         bufBits = bufBits';
       };
-  in hexString: (foldl' go initState (splitChars hexString)).ret;
+  in hexString: (foldl' go initState (stringToCharacters hexString)).ret;
 
 in {
   meta.maintainers = with maintainers; [ rycee montchr cmacrae ];
+
+  imports = [
+    (mkRemovedOptionModule [ "services" "gpg-agent" "pinentryFlavor" ]
+      "Use services.gpg-agent.pinentryPackage instead")
+  ];
 
   options = {
     services.gpg-agent = {
@@ -210,10 +214,9 @@ in {
           configuration file.
         '';
       };
-
-      pinentryFlavor = mkOption {
-        type = types.nullOr (types.enum (pkgs.pinentry.flavors ++ [ "mac" ]));
-        example = "gnome3";
+      pinentryPackage = mkOption {
+        type = types.nullOr types.package;
+        example = literalExpression "pkgs.pinentry-gnome3";
         default = null;
         description = ''
           Which pinentry interface to use. If not
@@ -251,19 +254,20 @@ in {
     {
       home.file."${homedir}/gpg-agent.conf" = {
         text = concatStringsSep "\n"
-          (optional (cfg.enableSshSupport) "enable-ssh-support"
-            ++ optional cfg.grabKeyboardAndMouse "grab"
-            ++ optional (!cfg.enableScDaemon) "disable-scdaemon"
-            ++ optional (cfg.defaultCacheTtl != null)
-            "default-cache-ttl ${toString cfg.defaultCacheTtl}"
-            ++ optional (cfg.defaultCacheTtlSsh != null)
-            "default-cache-ttl-ssh ${toString cfg.defaultCacheTtlSsh}"
-            ++ optional (cfg.maxCacheTtl != null)
-            "max-cache-ttl ${toString cfg.maxCacheTtl}"
-            ++ optional (cfg.maxCacheTtlSsh != null)
-            "max-cache-ttl-ssh ${toString cfg.maxCacheTtlSsh}"
-            ++ optional (cfg.pinentryFlavor != null)
-            "pinentry-program ${pinentryBinPath}" ++ [ cfg.extraConfig ]);
+        (optional (cfg.enableSshSupport) "enable-ssh-support"
+          ++ optional cfg.grabKeyboardAndMouse "grab"
+          ++ optional (!cfg.enableScDaemon) "disable-scdaemon"
+          ++ optional (cfg.defaultCacheTtl != null)
+          "default-cache-ttl ${toString cfg.defaultCacheTtl}"
+          ++ optional (cfg.defaultCacheTtlSsh != null)
+          "default-cache-ttl-ssh ${toString cfg.defaultCacheTtlSsh}"
+          ++ optional (cfg.maxCacheTtl != null)
+          "max-cache-ttl ${toString cfg.maxCacheTtl}"
+          ++ optional (cfg.maxCacheTtlSsh != null)
+          "max-cache-ttl-ssh ${toString cfg.maxCacheTtlSsh}"
+          ++ optional (cfg.pinentryPackage != null)
+          "pinentry-program ${lib.getExe cfg.pinentryPackage}"
+          ++ [ cfg.extraConfig ]);
         onChange =
           optionalString pkgs.stdenv.hostPlatform.isDarwin gpgSshSupportStr;
       };

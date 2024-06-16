@@ -71,6 +71,7 @@ in import nmtSrc {
     ./modules/programs/dircolors
     ./modules/programs/direnv
     ./modules/programs/emacs
+    ./modules/programs/fastfetch
     ./modules/programs/feh
     ./modules/programs/fish
     ./modules/programs/gallery-dl
@@ -88,6 +89,7 @@ in import nmtSrc {
     ./modules/programs/i3status
     ./modules/programs/irssi
     ./modules/programs/jujutsu
+    ./modules/programs/joplin-desktop
     ./modules/programs/k9s
     ./modules/programs/kakoune
     ./modules/programs/khal
@@ -121,11 +123,13 @@ in import nmtSrc {
     ./modules/programs/pet
     ./modules/programs/pistol
     ./modules/programs/pls
+    ./modules/programs/poetry
     ./modules/programs/powerline-go
     ./modules/programs/pubs
     ./modules/programs/pyenv
     ./modules/programs/qcal
     ./modules/programs/qutebrowser
+    ./modules/programs/ranger
     ./modules/programs/readline
     ./modules/programs/rio
     ./modules/programs/ripgrep
@@ -134,9 +138,11 @@ in import nmtSrc {
     ./modules/programs/sapling
     ./modules/programs/sbt
     ./modules/programs/scmpuff
+    ./modules/programs/senpai
     ./modules/programs/sftpman
     ./modules/programs/sioyek
     ./modules/programs/sm64ex
+    ./modules/programs/spotify-player
     ./modules/programs/ssh
     ./modules/programs/starship
     ./modules/programs/taskwarrior
@@ -153,6 +159,7 @@ in import nmtSrc {
     ./modules/programs/wezterm
     ./modules/programs/yazi
     ./modules/programs/zellij
+    ./modules/programs/zk
     ./modules/programs/zplug
     ./modules/programs/zsh
     ./modules/services/syncthing/common
@@ -160,6 +167,7 @@ in import nmtSrc {
     ./modules/xresources
   ] ++ lib.optionals isDarwin [
     ./modules/launchd
+    ./modules/services/espanso-darwin
     ./modules/services/git-sync-darwin
     ./modules/services/imapnotify-darwin
     ./modules/services/nix-gc-darwin
@@ -184,10 +192,13 @@ in import nmtSrc {
     ./modules/programs/boxxy
     ./modules/programs/firefox
     ./modules/programs/foot
+    ./modules/programs/freetube
     ./modules/programs/fuzzel
     ./modules/programs/getmail
+    ./modules/programs/gnome-shell
     ./modules/programs/gnome-terminal
     ./modules/programs/hexchat
+    ./modules/programs/hyprlock
     ./modules/programs/i3blocks
     ./modules/programs/i3status-rust
     ./modules/programs/imv
@@ -203,12 +214,15 @@ in import nmtSrc {
     ./modules/programs/swayr
     ./modules/programs/terminator
     ./modules/programs/thunderbird
+    ./modules/programs/tofi
     ./modules/programs/waybar
     ./modules/programs/wlogout
     ./modules/programs/wofi
     ./modules/programs/wpaperd
     ./modules/programs/xmobar
+    ./modules/programs/yambar
     ./modules/programs/yt-dlp
+    ./modules/services/activitywatch
     ./modules/services/avizo
     ./modules/services/barrier
     ./modules/services/borgmatic
@@ -216,6 +230,7 @@ in import nmtSrc {
     ./modules/services/cliphist
     ./modules/services/clipman
     ./modules/services/comodoro
+    ./modules/services/conky
     ./modules/services/darkman
     ./modules/services/devilspie2
     ./modules/services/dropbox
@@ -228,6 +243,8 @@ in import nmtSrc {
     ./modules/services/git-sync
     ./modules/services/gromit-mpx
     ./modules/services/home-manager-auto-upgrade
+    ./modules/services/hypridle
+    ./modules/services/hyprpaper
     ./modules/services/imapnotify
     ./modules/services/kanshi
     ./modules/services/lieer
@@ -247,9 +264,11 @@ in import nmtSrc {
     ./modules/services/polybar
     ./modules/services/recoll
     ./modules/services/redshift-gammastep
+    ./modules/services/remmina
     ./modules/services/screen-locker
     ./modules/services/signaturepdf
     ./modules/services/swayidle
+    ./modules/services/swaync
     ./modules/services/swayosd
     ./modules/services/sxhkd
     ./modules/services/syncthing/linux
@@ -260,6 +279,7 @@ in import nmtSrc {
     ./modules/services/window-managers/herbstluftwm
     ./modules/services/window-managers/hyprland
     ./modules/services/window-managers/i3
+    ./modules/services/window-managers/river
     ./modules/services/window-managers/spectrwm
     ./modules/services/window-managers/sway
     ./modules/services/wlsunset

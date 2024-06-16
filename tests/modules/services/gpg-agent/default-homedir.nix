@@ -9,11 +9,14 @@ let
 in {
   config = {
     services.gpg-agent.enable = true;
-    services.gpg-agent.pinentryFlavor = null; # Don't build pinentry package.
+    services.gpg-agent.pinentryPackage = pkgs.pinentry-gnome3;
     programs.gpg.enable = true;
 
-    test.stubs.gnupg = { };
-    test.stubs.systemd = { }; # depends on gnupg.override
+    test.stubs = {
+      gnupg = { };
+      systemd = { }; # depends on gnupg.override
+      pinentry-gnome3 = { };
+    };
 
     nmt.script = optionalString isLinux ''
       in="${socketPath}"
@@ -23,6 +26,9 @@ in {
         echo $in
         fail "gpg-agent socket directory not set to default value"
       fi
+
+      configFile=home-files/.gnupg/gpg-agent.conf
+      assertFileRegex $configFile "pinentry-program @pinentry-gnome3@/bin/dummy"
     '';
   };
 }
